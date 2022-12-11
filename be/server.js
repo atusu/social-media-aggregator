@@ -4,13 +4,12 @@ const path = require('path');
 const app = express();
 const port = 3000;  
 app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ extended: true }));
 
-const cwd = path.resolve(path.dirname (''));
-app.use(express.static(cwd));
+const feDir = path.join(__dirname, '../fe')
+app.use(express.static(feDir));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/index.html'));
+  res.sendFile(`${feDir}/index.html`);
 })
 
 app.listen(port, () => {
@@ -22,4 +21,10 @@ app.post('/here', (req, res) => {
   console.log("REQUEST : " + req.body.content);
   var input = req.body.content;
   res.send(JSON.stringify({"input": input}));
-})
+});
+
+app.post('/special-pt-mihai', (req, res) => {
+  console.log("REQUEST : " + req.body.content);
+  var mihai = req.body.content;
+  res.send(JSON.stringify({"input": mihai}));
+});
