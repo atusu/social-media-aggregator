@@ -34,9 +34,15 @@ export async function callRedditAPI(user){
     });
     
     const dataForUser = await responseForUser.json();
-    console.log(dataForUser.data.children);
-    let posts = dataForUser.data.children;
-    return posts;
+    //console.log(dataForUser.data.children);
+    try {
+        let posts = dataForUser.data.children;
+        return posts;
+    } catch (error) {
+        let res = {"error":"This Reddit user doesn't exist"};
+        return res;
+    }
+
     //get user posts
 
     // for(let i = 0; i < posts.length; i++){

@@ -51,11 +51,16 @@ app.post('/twitter', async (req, res) => {
 
 app.post('/reddit', async (req, res) => {
   console.log("REQUEST : " + req.body.content);
-  const redditResponse = await callRedditAPI(req.body.content);
-  //let redditResponseData = redditResponse.data;
-  for(let i = 0; i <redditResponse.length; i++){
-    redditResponse[i] = redditResponse[i].data.selftext;
-  }
+  let redditResponse = await callRedditAPI(req.body.content);
+  let error = false;
 
-  res.send(JSON.stringify({"input": redditResponse, "option":"reddit"}));
+  if("error" in redditResponse){
+    redditResponse = redditResponse.error;
+    error = true;
+  }else{
+    for(let i = 0; i <redditResponse.length; i++){
+      redditResponse[i] = redditResponse[i].data.selftext;
+    }
+  }
+  res.send(JSON.stringify({"input": redditResponse, "option":"reddit", "error":error}));
 });

@@ -18,7 +18,11 @@ async function fetchReq(slash, content){
     }
     const responseData = await serverResponse.json()
     console.log(responseData)
-    if(responseData.input.length > 1){
+    if(responseData.error == true){
+        response.innerHTML = "";
+        let str = '<div style="border: 1px solid red;">'+responseData.input+'</div>';
+        response.insertAdjacentHTML("beforeend", str);
+    }else{
         response.innerHTML = "";
         for(let i = 0; i < responseData.input.length; i++){            
             let str = '<div style="display:flex;" class="tweet">'+
@@ -27,9 +31,10 @@ async function fetchReq(slash, content){
             '</div>';
             response.insertAdjacentHTML("beforeend", str);  
         }
-    }else{
-        response.innerHTML = "Nu am gasit user";
-    }   
+    }
+    //else{
+    //     response.innerHTML = "Nu am gasit user";
+    // }   
 }
 
 async function main() {
