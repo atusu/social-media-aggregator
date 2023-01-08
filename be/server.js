@@ -25,19 +25,6 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-//app.use(express.bodyParser())
-// app.post('/here', (req, res) => {
-//   console.log("REQUEST : " + req.body.content);
-//   var input = req.body.content;
-//   res.send(JSON.stringify({"input": input, "option":"alisia"}));
-// });
-
-// app.post('/special-pt-mihai', (req, res) => {
-//   console.log("REQUEST : " + req.body.content);
-//   var mihai = req.body.content;
-//   res.send(JSON.stringify({"input": "mihai", "option":"mihai"}));
-// });
-
 app.post('/twitter', async (req, res) => {
   console.log("REQUEST : " + req.body.content);
   const twitterResponse = await callTwitterAPI(req.body.content);

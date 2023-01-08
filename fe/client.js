@@ -2,10 +2,8 @@ const button = document.querySelector("#my-button");
 const div = document.querySelector("#myDiv");
 const response = document.querySelector("#response");
 
-const option1 = document.querySelector("#alisia");
-const option2 = document.querySelector("#mihai");
-const option3 = document.querySelector("#twitter");
-const option4 = document.querySelector("#reddit");
+const option1 = document.querySelector("#twitter");
+const option2 = document.querySelector("#reddit");
 
 function returnOptions(content){
     return {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({"content" :content})};
@@ -37,10 +35,6 @@ async function fetchReq(slash, content){
 async function main() {
     button.addEventListener("click", function(){
         if(option1.selected == true){
-            fetchReq("/here",document.getElementById("my-input").value);
-        }else if(option2.selected == true){
-            fetchReq("/special-pt-mihai",document.getElementById("my-input").value);
-        }else if(option3.selected == true){
             fetchReq("/twitter",document.getElementById("my-input").value);
         }else{
             fetchReq("/reddit",document.getElementById("my-input").value);
