@@ -20,7 +20,7 @@ async function fetchReq(slash, content){
     console.log(responseData)
     if(responseData.error == true){
         response.innerHTML = "";
-        let str = '<div style="border: 1px solid red;">'+responseData.input+'</div>';
+        let str = '<div style="border: 1px solid red;">'+responseData["error-message"]+'</div>';
         response.insertAdjacentHTML("beforeend", str);
     }else{
         response.innerHTML = "";
@@ -31,10 +31,7 @@ async function fetchReq(slash, content){
             '</div>';
             response.insertAdjacentHTML("beforeend", str);  
         }
-    }
-    //else{
-    //     response.innerHTML = "Nu am gasit user";
-    // }   
+    } 
 }
 
 async function main() {

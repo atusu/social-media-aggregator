@@ -26,41 +26,28 @@ app.listen(port, () => {
 })
 
 //app.use(express.bodyParser())
-app.post('/here', (req, res) => {
-  console.log("REQUEST : " + req.body.content);
-  var input = req.body.content;
-  res.send(JSON.stringify({"input": input, "option":"alisia"}));
-});
+// app.post('/here', (req, res) => {
+//   console.log("REQUEST : " + req.body.content);
+//   var input = req.body.content;
+//   res.send(JSON.stringify({"input": input, "option":"alisia"}));
+// });
 
-app.post('/special-pt-mihai', (req, res) => {
-  console.log("REQUEST : " + req.body.content);
-  var mihai = req.body.content;
-  res.send(JSON.stringify({"input": "mihai", "option":"mihai"}));
-});
+// app.post('/special-pt-mihai', (req, res) => {
+//   console.log("REQUEST : " + req.body.content);
+//   var mihai = req.body.content;
+//   res.send(JSON.stringify({"input": "mihai", "option":"mihai"}));
+// });
 
 app.post('/twitter', async (req, res) => {
   console.log("REQUEST : " + req.body.content);
   const twitterResponse = await callTwitterAPI(req.body.content);
-  let twitterResponseData = twitterResponse.data;
-  for(let i = 0; i <twitterResponseData.length; i++){
-     twitterResponseData[i] = twitterResponseData[i].text;
-  }
-
-  res.send(JSON.stringify({"input": twitterResponseData, "option":"twitter"}));
+  //--------------------------------------------------------------------
+   res.send(JSON.stringify({"input": twitterResponse.posts, "status": twitterResponse.status, "error":twitterResponse.error, "error-message":twitterResponse["error-message"]}));
 });
 
 app.post('/reddit', async (req, res) => {
   console.log("REQUEST : " + req.body.content);
   let redditResponse = await callRedditAPI(req.body.content);
-  let error = false;
-
-  if("error" in redditResponse){
-    redditResponse = redditResponse.error;
-    error = true;
-  }else{
-    for(let i = 0; i <redditResponse.length; i++){
-      redditResponse[i] = redditResponse[i].data.selftext;
-    }
-  }
-  res.send(JSON.stringify({"input": redditResponse, "option":"reddit", "error":error}));
+  //-------------------------------------------------------------------
+  res.send(JSON.stringify({"input": redditResponse.posts, "status": redditResponse.status, "error":redditResponse.error, "error-message":redditResponse["error-message"]}));
 });

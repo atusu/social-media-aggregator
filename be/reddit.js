@@ -22,10 +22,8 @@ export async function callRedditAPI(user){
 
     const data = await response.json();
     let access_token = data.access_token;
-    console.log(access_token);
-
+    //-------------------------------------------------
     let newuser = user;
-    //async function apiCall(){
     const responseForUser = await fetch(`https://oauth.reddit.com/user/${newuser}/submitted`, {
         method: "GET",
         headers: {
@@ -34,24 +32,47 @@ export async function callRedditAPI(user){
     });
     
     const dataForUser = await responseForUser.json();
-    //console.log(dataForUser.data.children);
+    //-------------------------------------------------
+    let responseForServer = {};
+    let state = 0;
+    let posts = [];
+    //-------------------------------------------------
+    //checks if the user exists
     try {
-        let posts = dataForUser.data.children;
-        return posts;
+        posts = dataForUser.data.children;
+        //checks if the user exists and has posts
+        if(posts.length > 0){
+            //each post's text is added to an array which is passed to the server response object
+            for(let i = 0; i < posts.length; i++){
+                posts[i] = posts[i].data.selftext;
+                //state = 1 -- if user exists and has posts
+                state = 1;
+            }
+        }else{
+            //state = 2 -- if the user exists but has no posts
+            state = 2;
+        }
+        
     } catch (error) {
-        let res = {"error":"This Reddit user doesn't exist"};
-        return res;
+        //state = 3 -- if the user doesn't exist
+        state = 3;
+    }
+    //-------------------------------------------------
+    switch (state) {
+        case 1:
+            responseForServer = {"posts": posts, "status":"200", "error": false, "error-message":"We gucci"};
+            break;
+        case 2:
+            responseForServer = {"posts":"0", "status":"204", "error":true, "error-message":"No posts for this user"};
+            break;
+        case 3:
+            responseForServer = {"posts":"0", "status":"204", "error":true, "error-message":"No user/empty input"};
+            break;
+        default:
+            break;
     }
 
-    //get user posts
-
-    // for(let i = 0; i < posts.length; i++){
-    //     let counter = i+1;
-    //     console.log(counter + ". " +posts[i].data.selftext + "\n" + posts[i].data.url);
-    // }
-    //}
-
-    //apiCall();
+    return responseForServer;
 }
 
 
