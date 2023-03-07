@@ -1,1 +1,1 @@
-IT AIN'T MUCH BUT IT'S HONEST WORK
+With this project I wanted to learn how the communication between the server and the client works. So, if a user enters the name of an account and selects a channel, they will see the last posts from that account. I used the public Twitter and Reddit APIs to fetch the public data from these two social media channels and JavaScript with Express JS for the back and forth between the client and the server.

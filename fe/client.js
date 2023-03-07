@@ -23,9 +23,10 @@ async function fetchReq(slash, content){
     }else{
         response.innerHTML = "";
         for(let i = 0; i < responseData.input.length; i++){            
-            let str = '<div style="display:flex;" class="tweet">'+
-            '<div class="tweet-number" style="border: 1px solid black;">'+(i+1)+'</div>'+
-            '<div class="tweet-text" style="border: 1px solid black;">'+responseData.input[i]+'</div>'+
+            let str = '<div class="tweet">'+
+            '<div class="tweet-number">'+(i+1)+'</div>'+
+            '<div class="tweet-text"><p>'+responseData.input[i]+'</p></div>'+
+            // '<div class="tweet-id"><p>'+responseData.id[i]+'</p></div>'
             '</div>';
             response.insertAdjacentHTML("beforeend", str);  
         }

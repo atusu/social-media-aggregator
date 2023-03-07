@@ -30,11 +30,20 @@ export async function callTwitterAPI(username){
     }
     //-------------------------------------------------
     data = postsData.data;
+    console.log(data)
+
+    let newData = [];
+    newData["text"] = [];
+    newData["id"] = [];
     //it got here which means user exists and also has posts
     //will pass the posts' text as an array within the response object    
     for(let i = 0; i < data.length; i++) {
-        data[i] = data[i].text;
+        newData.text[i] = data[i].text;
+        newData.id[i] = data[i].id;
+
+        console.log((i+1) + newData.text[i])
+        console.log((i+1) + newData.id[i]);
     }
-    return responseForServer = {"posts":data, "error": false, "error-message":"We gucci", "status":"200"};
+    return responseForServer = {"posts":newData, "error": false, "error-message":"We gucci", "status":"200"};
 }
  

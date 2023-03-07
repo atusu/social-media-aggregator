@@ -29,7 +29,7 @@ app.post('/twitter', async (req, res) => {
   console.log("REQUEST : " + req.body.content);
   const twitterResponse = await callTwitterAPI(req.body.content);
   //--------------------------------------------------------------------
-   res.send(JSON.stringify({"input": twitterResponse.posts, "status": twitterResponse.status, "error":twitterResponse.error, "error-message":twitterResponse["error-message"]}));
+  res.send(JSON.stringify({"input": twitterResponse.posts.text, "id": twitterResponse.posts.id,  "status": twitterResponse.status, "error":twitterResponse.error, "error-message":twitterResponse["error-message"]}));
 });
 
 app.post('/reddit', async (req, res) => {
